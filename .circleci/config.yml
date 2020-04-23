@@ -13,10 +13,9 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
-          name: Test
-      - run:
-          command: date
+          command: |
+              pip install pytest-cov
+              pytest --cov=./ --cov-report=xml
 
 workflows:
   main:
