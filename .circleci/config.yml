@@ -1,8 +1,5 @@
 version: 2.1
 
-experimental:
-  pipelines: true
-
 orbs:
   python: circleci/python@0.2.1
   sonarcloud: sonarsource/sonarcloud@1.0.1
@@ -19,7 +16,7 @@ jobs:
           command: |
               pip install pytest-cov
               pytest --cov=./ --cov-report=xml
-              sonarcloud/scan
+      - sonarcloud/scan
 
 workflows:
   main:
