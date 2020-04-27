@@ -16,6 +16,7 @@ jobs:
           command: |
               pip install pytest-cov
               pytest --cov=./ --cov-report=xml
+              sonarcloud/scan
 
 workflows:
   main:
