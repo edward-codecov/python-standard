@@ -1,5 +1,8 @@
 version: 2.1
 
+experimental:
+  pipelines: true
+
 orbs:
   python: circleci/python@0.2.1
   sonarcloud: sonarsource/sonarcloud@1.0.1
