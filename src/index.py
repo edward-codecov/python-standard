@@ -228,3 +228,8 @@ def uncovered1588300453():
     a = 1
     return
 
+
+def uncovered1588300855():
+    a = 1
+    return
+
