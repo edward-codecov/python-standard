@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
-  sonarcloud: sonarsource/sonarcloud@1.0.1
 
 jobs:
   build-and-test:
@@ -13,10 +12,18 @@ jobs:
       # - python/install-deps
       # - python/save-cache
       - run:
+        name: Install Sonarqube scanner
+        command: |
+            wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102.zip
+            unzip sonar-scanner-cli-4.3.0.2102.zip
+            ls -sla
+
+      - run:
           command: |
+              ls -sla
               pip install pytest-cov
               pytest --cov=./ --cov-report=xml
-      - sonarcloud/scan
+              
 
 workflows:
   main:
