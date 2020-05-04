@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Run SonarScanner
           command: |
-              echo "sonar.login="$SONAR_TOKEN > ./sonar-project.properties
+              echo "sonar.login="$SONAR_TOKEN >> ./sonar-project.properties
               ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner -X
 
 workflows:
