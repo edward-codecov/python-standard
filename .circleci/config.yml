@@ -6,6 +6,8 @@ orbs:
 jobs:
   build-and-test:
     executor: python/default
+    environment:
+      SONARSCANNER_VERSION: "4.3.0.2102"
     steps:
       - checkout
       # - python/load-cache
@@ -14,15 +16,20 @@ jobs:
       - run:
           name: Install Sonarqube scanner
           command: |
-              wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102.zip
-              unzip sonar-scanner-cli-4.3.0.2102.zip
+              wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONARSCANNER_VERSION.zip
+              unzip sonar-scanner-cli-$SONARSCANNER_VERSION.zip
               ls -sla
 
       - run:
+          name: Test
           command: |
               ls -sla
               pip install pytest-cov
               pytest --cov=./ --cov-report=xml
+
+      - run:
+          name: Run SonarScanner
+          command: ./sonar-scanner-$SONARSCANNER_VERSION
 
 workflows:
   main:
