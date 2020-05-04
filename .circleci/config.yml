@@ -31,7 +31,7 @@ jobs:
 
       - run:
           name: Run SonarScanner
-          command: ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner
+          command: ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner -X
 
 workflows:
   main:
