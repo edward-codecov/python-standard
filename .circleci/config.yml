@@ -2,7 +2,6 @@ version: 2.1
 
 jobs:
   build-and-test:
-    executor: python/default
     environment:
       SONARSCANNER_VERSION: "4.3.0.2102"
     steps:
