@@ -1,7 +1,11 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@0.2.1
+
 jobs:
   build-and-test:
+    executor: python/default
     environment:
       SONARSCANNER_VERSION: "4.3.0.2102"
     steps:
@@ -12,17 +16,16 @@ jobs:
       - run:
           name: Install OpenJDK 11
           command: sudo apt install openjdk-11-jdk
+
       - run:
-          name: Install Sonarqube scanner
+          name: Install SonarScanner
           command: |
               wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONARSCANNER_VERSION.zip
               unzip sonar-scanner-cli-$SONARSCANNER_VERSION.zip
-              ls -sla
 
       - run:
           name: Test
           command: |
-              ls -sla
               pip install pytest-cov
               pytest --cov=./ --cov-report=xml
 
