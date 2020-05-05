@@ -1,0 +1,44 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  build-and-test:
+    executor: python/default
+    environment:
+      SONARSCANNER_VERSION: "4.3.0.2102"
+    steps:
+      - checkout
+      # - python/load-cache
+      # - python/install-deps
+      # - python/save-cache
+      - run:
+          name: Install OpenJDK 11
+          command: sudo apt install openjdk-11-jdk
+
+      - run:
+          name: Install SonarScanner
+          command: |
+              wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONARSCANNER_VERSION.zip
+              unzip sonar-scanner-cli-$SONARSCANNER_VERSION.zip
+
+      - run:
+          name: Test
+          command: |
+              pip install pytest-cov
+              pytest --cov=./ --cov-report=xml
+
+      - run:
+          name: Run SonarScanner
+          command: |
+              echo "sonar.login="$SONAR_TOKEN >> ./sonar-project.properties
+              echo "sonar.pullrequest.key=7" >> ./sonar-project.properties
+              echo "sonar.pullrequest.branch=circleci-project-setup" >> ./sonar-project.properties
+              echo "sonar.pullrequest.base=master" >> ./sonar-project.properties
+              ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner -X 
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
