@@ -33,7 +33,10 @@ jobs:
           name: Run SonarScanner
           command: |
               echo "sonar.login="$SONAR_TOKEN >> ./sonar-project.properties
-              ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner -X
+              echo "sonar.pullrequest.key=6" >> ./sonar-project.properties
+              echo "sonar.pullrequest.branch=circleci-project-setup" >> ./sonar-project.properties
+              echo "sonar.pullrequest.base=master" >> ./sonar-project.properties
+              ./sonar-scanner-$SONARSCANNER_VERSION/bin/sonar-scanner -X 
 
 workflows:
   main:
